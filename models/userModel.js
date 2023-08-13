@@ -38,6 +38,10 @@ const UserModelSchema = new mongoose.Schema(
       required: false,
       default: "41.90075465742505, 12.492040990831944",
     },
+    todos: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,

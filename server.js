@@ -9,14 +9,16 @@ require("dotenv").config();
 
 //! Routes import
 const UsersRoute = require("./routes/users");
+const LoginRoute = require("./routes/login");
 
-const App = express();
+const app = express();
 
 //! middlewares
-App.use(cors());
+app.use(cors());
 
-App.use(express.json());
-App.use("/", UsersRoute);
+app.use(express.json());
+app.use("/", UsersRoute);
+app.use("/", LoginRoute);
 
 mongoose.connect(process.env.MONGO_DB_URL);
 const db = mongoose.connection;
@@ -25,4 +27,4 @@ db.once("open", () => {
   console.log("MongoDB database correctly connected");
 });
 
-App.listen(PORT, () => console.log(`Server started and listening on port: ${PORT}`));
+app.listen(PORT, () => console.log(`Server started and listening on port: ${PORT}`));

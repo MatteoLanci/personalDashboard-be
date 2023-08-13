@@ -1,15 +1,20 @@
 ######! GET all users
 GET http://localhost:5050/users
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJNYXR0ZW8iLCJsYXN0TmFtZSI6IkxhbmNpIiwiZW1haWwiOiJtbGFuY2lAZ21haWwuY29tIiwiZG9iIjoiMTk5MC0wNC0yMCIsImF2YXRhciI6Imh0dHBzOi8vczMuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbS9jZG4uZ3JlZWtoZXJhbGQuY29tLmF1L3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA3LzA1MTk0NjE3L2RlZmF1bHQtYXZhdGFyLnBuZyIsImlkIjoiNjRjZWFlNTRjYTdlN2EyOWVkM2Q3ODA1IiwiaWF0IjoxNjkxODg1MTg3LCJleHAiOjE2OTE5NzE1ODd9.dPoLTJLPGHemWUVz-LcY-WJ7GC_HGHtis6cTjaae5NY
+
+######! GET specific user by its ID
+GET http://localhost:5050/users/64ceae54ca7e7a29ed3d7805
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJNYXR0ZW8iLCJsYXN0TmFtZSI6IkxhbmNpIiwiZW1haWwiOiJtbGFuY2lAZ21haWwuY29tIiwiZG9iIjoiMTk5MC0wNC0yMCIsImF2YXRhciI6Imh0dHBzOi8vczMuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbS9jZG4uZ3JlZWtoZXJhbGQuY29tLmF1L3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA3LzA1MTk0NjE3L2RlZmF1bHQtYXZhdGFyLnBuZyIsImlkIjoiNjRjZWFlNTRjYTdlN2EyOWVkM2Q3ODA1IiwiaWF0IjoxNjkxODg1MTg3LCJleHAiOjE2OTE5NzE1ODd9.dPoLTJLPGHemWUVz-LcY-WJ7GC_HGHtis6cTjaae5NY
 
 ######! POST new author to DB
 POST http://localhost:5050/users/create HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstName": "Ciccio",
-    "lastName": "Pasticcio",
-    "email": "cPasticcio@gmail.com",
-    "password": "ciccio",
+    "firstName": "Matteo",
+    "lastName": "Lanci",
+    "email": "mlanci@gmail.com",
+    "password": "matteo",
     "dob": "1990-20-04"
 }
 

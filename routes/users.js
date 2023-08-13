@@ -7,8 +7,11 @@ const UserModel = require("../models/userModel");
 
 const user = express.Router();
 
+//? middlewares IMPORT
+const verifyToken = require("../middlewares/verifyToken");
+
 //! GET all users
-user.get("/users", async (req, res) => {
+user.get("/users", verifyToken, async (req, res) => {
   try {
     const users = await UserModel.find();
 
@@ -24,6 +27,26 @@ user.get("/users", async (req, res) => {
       message: "Here all users in DB",
       usersCount: users.length,
       users,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
+
+//! GET a specific user by its ID
+user.get("/users/:userId", verifyToken, async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const userById = await UserModel.findById(userId);
+    res.status(200).send({
+      statusCode: 200,
+      message: `here's author with id: ${userId}`,
+      userById,
     });
   } catch (error) {
     res.status(500).send({
