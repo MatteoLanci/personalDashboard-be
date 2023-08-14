@@ -10,6 +10,7 @@ require("dotenv").config();
 //! Routes import
 const UsersRoute = require("./routes/users");
 const LoginRoute = require("./routes/login");
+const TodosRoute = require("./routes/todos");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/", UsersRoute);
 app.use("/", LoginRoute);
+app.use("/", TodosRoute);
 
 mongoose.connect(process.env.MONGO_DB_URL);
 const db = mongoose.connection;

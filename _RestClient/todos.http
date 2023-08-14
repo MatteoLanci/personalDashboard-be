@@ -1,0 +1,22 @@
+######! GET all todos in DB
+GET http://localhost:5050/todos
+
+######! POST new Todo for specific user
+POST http://localhost:5050/todos/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "user":"64d938fa150a3805bd28d40b",
+    "content": "remember me to do something"
+}
+
+######! PATCH a specific todo
+PATCH http://localhost:5050/todos/64d9391a150a3805bd28d40f HTTP/1.1
+Content-Type: application/json
+
+{
+"content": "Please remember me to complete all my task!"
+}
+
+######! DELETE a specific Todo from DB
+DELETE http://localhost:5050/todos/64da5b5cdc3a11a26c1adf4a/delete
