@@ -33,6 +33,7 @@ login.post("/login", async (req, res) => {
       avatar: user.avatar,
       location: user.location,
       id: user._id,
+      todos: user.todos,
     },
     process.env.JWT_SECRET,
     { expiresIn: "24h" }

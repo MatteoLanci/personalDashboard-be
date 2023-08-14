@@ -289,6 +289,8 @@ user.delete("/users/:userId/todos/:todoId/delete", async (req, res) => {
 
   try {
     const todoToDelete = await TodosModel.findByIdAndDelete(todoId);
+    user.todos.pull(todoId);
+    await user.save();
 
     res.status(200).send({
       statusCode: 200,
@@ -319,6 +321,8 @@ user.delete("/users/:userId/todos/delete-all", async (req, res) => {
 
   try {
     const todosToDelete = await TodosModel.deleteMany({ user: user._id });
+    user.todos = [];
+    await user.save();
 
     res.status(200).send({
       statusCode: 200,
