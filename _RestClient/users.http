@@ -1,6 +1,6 @@
 ######! GET all users
 GET http://localhost:5050/users
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJNYXR0ZW8iLCJsYXN0TmFtZSI6IkxhbmNpIiwiZW1haWwiOiJtbGFuY2lAZ21haWwuY29tIiwiZG9iIjoiMTk5MC0wNC0yMCIsImF2YXRhciI6Imh0dHBzOi8vczMuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbS9jZG4uZ3JlZWtoZXJhbGQuY29tLmF1L3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA3LzA1MTk0NjE3L2RlZmF1bHQtYXZhdGFyLnBuZyIsImlkIjoiNjRjZWFlNTRjYTdlN2EyOWVkM2Q3ODA1IiwiaWF0IjoxNjkxODg1MTg3LCJleHAiOjE2OTE5NzE1ODd9.dPoLTJLPGHemWUVz-LcY-WJ7GC_HGHtis6cTjaae5NY
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJNYXR0ZW8iLCJsYXN0TmFtZSI6IkxhbmNpIiwiZW1haWwiOiJtbGFuY2lAZ21haWwuY29tIiwiZG9iIjoiMTk5MC0yMC0wNCIsImF2YXRhciI6Imh0dHBzOi8vczMuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbS9jZG4uZ3JlZWtoZXJhbGQuY29tLmF1L3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA3LzA1MTk0NjE3L2RlZmF1bHQtYXZhdGFyLnBuZyIsImxvY2F0aW9uIjoiNDEuOTAwNzU0NjU3NDI1MDUsIDEyLjQ5MjA0MDk5MDgzMTk0NCIsImlkIjoiNjRkOTM4ZmExNTBhMzgwNWJkMjhkNDBiIiwiaWF0IjoxNjkyMDMxNTM0LCJleHAiOjE2OTIxMTc5MzR9.u-wwSaFteNAqX_AjtRlPLvtQxbgYvyAD3ARLaoFL4X0
 
 ######! GET specific user by its ID
 GET http://localhost:5050/users/64ceae54ca7e7a29ed3d7805
@@ -11,10 +11,10 @@ POST http://localhost:5050/users/create HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstName": "Matteo",
-    "lastName": "Lanci",
-    "email": "mlanci@gmail.com",
-    "password": "matteo",
+    "firstName": "Ciccio",
+    "lastName": "Pasticcio",
+    "email": "cpasticcio@gmail.com",
+    "password": "ciccio",
     "dob": "1990-20-04"
 }
 
@@ -28,3 +28,32 @@ Content-Type: application/json
 
 ######! DELETE a specific user from DB by its Id
 DELETE http://localhost:5050/users/64ceb20cd96c0fd0c575efa0/delete
+
+######? -------------------------> TODOS ROUTES RELATIVE TO SPECIFIC USER
+######! GET all todos relative to a single user
+GET http://localhost:5050/users/64d938fa150a3805bd28d40b/todos
+
+######! POST new todo relative to a specific user
+POST http://localhost:5050/users/64da6b17195c59e2a4b99cd9/todos/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "content" : "second todo for Ciccio!"
+}
+
+######! GET a specific ToDo relative to a specific user
+GET http://localhost:5050/users/64d938fa150a3805bd28d40b/todos/64da651af0db4ce8f3d4f778
+
+######! PATCH a specific ToDo relative to a specific user
+PATCH http://localhost:5050/users/64d938fa150a3805bd28d40b/todos/64da651af0db4ce8f3d4f778/edit HTTP/1.1
+Content-Type: application/json
+
+{
+    "content": "second TODO for Matteo (edited)"
+}
+
+######! DELETE a specific ToDo relative to a specific user
+DELETE http://localhost:5050/users/64d938fa150a3805bd28d40b/todos/64da651af0db4ce8f3d4f778/delete
+
+######! DELETE all ToDos relative to a specific user
+DELETE http://localhost:5050/users/64da6b17195c59e2a4b99cd9/todos/delete-all

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const UserModel = require("../models/userModel");
+const TodosModel = require("../models/todosModel");
 
 const user = express.Router();
 
@@ -13,7 +14,10 @@ const verifyToken = require("../middlewares/verifyToken");
 //! GET all users
 user.get("/users", verifyToken, async (req, res) => {
   try {
-    const users = await UserModel.find();
+    const users = await UserModel.find().populate({
+      path: "todos",
+      select: "content",
+    });
 
     if (!users) {
       return res.status(404).send({
@@ -147,4 +151,186 @@ user.delete("/users/:userId/delete", async (req, res) => {
   }
 });
 
+//? --------------> TODOS ROUTES RELATIVE TO SPECIFIC USER
+//! GET all todos relative to a single user
+user.get("/users/:userId/todos", async (req, res) => {
+  const { userId } = req.params;
+
+  const user = await UserModel.findById(userId).populate({ path: "todos" });
+
+  const todos = user.todos;
+
+  if (!todos) {
+    return res.status(404).send({
+      statusCode: 404,
+      message: `User with ID: ${userId} does not have any todo yet`,
+    });
+  }
+
+  try {
+    res.status(200).send({
+      statusCode: 200,
+      countTodos: todos.length,
+      todos,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
+
+//! POST new todo relative to a specific user
+user.post("/users/:userId/todos/create", async (req, res) => {
+  const { userId } = req.params;
+
+  const user = await UserModel.findById(userId);
+  const newTodo = new TodosModel({
+    user: user._id,
+    content: req.body.content,
+  });
+
+  try {
+    const todo = await newTodo.save();
+
+    await UserModel.findByIdAndUpdate(userId, { $push: { todos: todo } });
+
+    res.status(200).send({
+      statusCode: 200,
+      mesage: "New Todo saved successfully",
+      payload: todo,
+      new: true,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
+
+//! GET a specific ToDo relative to a specific user
+user.get("/users/:userId/todos/:todoId", async (req, res) => {
+  const { userId, todoId } = req.params;
+
+  const user = await UserModel.findById(userId);
+  const todo = await TodosModel.findById(todoId);
+
+  if (!todo) {
+    return res.status(404).send({
+      statusCode: 404,
+      message: `todo with ID: ${todoId} not found in DB`,
+    });
+  }
+
+  try {
+    res.status(200).send({
+      statusCode: 200,
+      message: `Here's todo with ID: ${todoId}`,
+      user: user.firstName,
+      todo,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
+
+//! PATCH a specific ToDo relative to a specific user
+user.patch("/users/:userId/todos/:todoId/edit", async (req, res) => {
+  const { userId, todoId } = req.params;
+  const user = await UserModel.findById(userId);
+  const todo = await TodosModel.findById(todoId);
+
+  if (!todo) {
+    return res.status(404).send({
+      statusCode: 404,
+      message: `Todo with ID: ${todoId} not found relative to user: ${user.firstName}`,
+    });
+  }
+
+  try {
+    const dataToUpdate = req.body;
+    const options = { new: true };
+    const result = await TodosModel.findByIdAndUpdate(todoId, dataToUpdate, options);
+
+    res.status(200).send({
+      statusCode: 200,
+      message: `Todo with ID: ${todoId} successfully edited`,
+      result,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
+
+//! DELETE a specific ToDo relative to a specific user
+user.delete("/users/:userId/todos/:todoId/delete", async (req, res) => {
+  const { userId, todoId } = req.params;
+  const user = await UserModel.findById(userId);
+  const todo = await TodosModel.findById(todoId);
+
+  if (!todo) {
+    return res.status(404).send({
+      statusCode: 404,
+      message: `Todo with ID: ${todoId} not found in DB in order to delete it`,
+    });
+  }
+
+  try {
+    const todoToDelete = await TodosModel.findByIdAndDelete(todoId);
+
+    res.status(200).send({
+      statusCode: 200,
+      message: `Todo with ID: ${todoId} relative to ${user.firstName} successfully deleted from DB`,
+      todoToDelete,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
+
+//! DELETE all ToDos relative to a specific user
+user.delete("/users/:userId/todos/delete-all", async (req, res) => {
+  const { userId } = req.params;
+  const user = await UserModel.findById(userId);
+  const userTodos = await TodosModel.find();
+
+  if (!userTodos) {
+    return res.status(404).send({
+      statusCode: 404,
+      message: `No todos relative to ${user.firstName} found in DB`,
+    });
+  }
+
+  try {
+    const todosToDelete = await TodosModel.deleteMany({ user: user._id });
+
+    res.status(200).send({
+      statusCode: 200,
+      message: `All todos relative to ${user.firstName} have been removed from DB`,
+      todosToDelete,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
 module.exports = user;
