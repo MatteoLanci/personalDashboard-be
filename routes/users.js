@@ -10,6 +10,23 @@ const user = express.Router();
 
 //? middlewares IMPORT
 const verifyToken = require("../middlewares/verifyToken");
+const cloudinaryUpload = require("../middlewares/cloudUpload");
+
+//! POST propic/img in Cloudinary
+user.post("/users/cloudinaryUpload", cloudinaryUpload.single("avatar"), async (req, res) => {
+  try {
+    res.status(200).send({
+      statusCode: 200,
+      message: "Avatar successfully uploaded to Cloud",
+      avatar: req.file.path,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Avatar upload error occurs, please try again",
+    });
+  }
+});
 
 //! GET all users
 user.get("/users", verifyToken, async (req, res) => {
