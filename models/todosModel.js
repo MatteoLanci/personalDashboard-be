@@ -20,6 +20,11 @@ const TodosModelSchema = new mongoose.Schema(
       required: false,
       default: Date.now,
     },
+    completed: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   {
     timestamps: true,
