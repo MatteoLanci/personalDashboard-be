@@ -15,7 +15,7 @@ Content-Type: application/json
     "lastName": "Pasticcio",
     "email": "cpasticcio@gmail.com",
     "password": "ciccio",
-    "dob": "1990-20-04"
+    "dob": "1989-19-02"
 }
 
 ######! PATCH an existing user by its ID
