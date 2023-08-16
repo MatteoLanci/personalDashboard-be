@@ -33,6 +33,12 @@ const UserModelSchema = new mongoose.Schema(
       default:
         "https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png",
     },
+    profileCover: {
+      type: String,
+      required: false,
+      default:
+        "https://images.squarespace-cdn.com/content/v1/58586fa5ebbd1a60e7d76d3e/1494409187514-MSDQ228RFH6IOVK8NZMK/image-asset.jpeg",
+    },
     location: {
       type: String,
       required: false,
