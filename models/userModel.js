@@ -42,7 +42,7 @@ const UserModelSchema = new mongoose.Schema(
     location: {
       type: String,
       required: false,
-      default: "41.90075465742505, 12.492040990831944",
+      default: "41.9027835, 12.4963655",
     },
     todos: [
       {
