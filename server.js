@@ -11,6 +11,8 @@ require("dotenv").config();
 const UsersRoute = require("./routes/users");
 const LoginRoute = require("./routes/login");
 const TodosRoute = require("./routes/todos");
+const WishlistRoute = require("./routes/wishlist");
+const MoneyboxRoute = require("./routes/moneybox");
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use(express.json());
 app.use("/", UsersRoute);
 app.use("/", LoginRoute);
 app.use("/", TodosRoute);
+app.use("/", WishlistRoute);
+app.use("/", MoneyboxRoute);
 
 mongoose.connect(process.env.MONGO_DB_URL);
 const db = mongoose.connection;
