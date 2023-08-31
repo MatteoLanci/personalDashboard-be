@@ -51,6 +51,17 @@ const UserModelSchema = new mongoose.Schema(
         default: [],
       },
     ],
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Wishlist",
+        default: [],
+      },
+    ],
+    moneybox: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Moneybox",
+    },
   },
   {
     timestamps: true,
