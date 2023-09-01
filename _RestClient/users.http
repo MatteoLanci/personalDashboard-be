@@ -3,19 +3,19 @@ GET http://localhost:5050/users
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJNYXR0ZW8iLCJsYXN0TmFtZSI6IkxhbmNpIiwiZW1haWwiOiJtbGFuY2lAZ21haWwuY29tIiwiZG9iIjoiMTk5MC0yMC0wNCIsImF2YXRhciI6Imh0dHBzOi8vczMuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbS9jZG4uZ3JlZWtoZXJhbGQuY29tLmF1L3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA3LzA1MTk0NjE3L2RlZmF1bHQtYXZhdGFyLnBuZyIsImxvY2F0aW9uIjoiNDEuOTAwNzU0NjU3NDI1MDUsIDEyLjQ5MjA0MDk5MDgzMTk0NCIsImlkIjoiNjRkOTM4ZmExNTBhMzgwNWJkMjhkNDBiIiwiaWF0IjoxNjkyMDMxNTM0LCJleHAiOjE2OTIxMTc5MzR9.u-wwSaFteNAqX_AjtRlPLvtQxbgYvyAD3ARLaoFL4X0
 
 ######! GET specific user by its ID
-GET http://localhost:5050/users/64ceae54ca7e7a29ed3d7805
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJNYXR0ZW8iLCJsYXN0TmFtZSI6IkxhbmNpIiwiZW1haWwiOiJtbGFuY2lAZ21haWwuY29tIiwiZG9iIjoiMTk5MC0wNC0yMCIsImF2YXRhciI6Imh0dHBzOi8vczMuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbS9jZG4uZ3JlZWtoZXJhbGQuY29tLmF1L3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA3LzA1MTk0NjE3L2RlZmF1bHQtYXZhdGFyLnBuZyIsImlkIjoiNjRjZWFlNTRjYTdlN2EyOWVkM2Q3ODA1IiwiaWF0IjoxNjkxODg1MTg3LCJleHAiOjE2OTE5NzE1ODd9.dPoLTJLPGHemWUVz-LcY-WJ7GC_HGHtis6cTjaae5NY
+GET http://localhost:5050/users/64f21ec8fd546ea80ed9f3e7
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJNYXR0ZW8iLCJsYXN0TmFtZSI6IkxhbmNpIiwiZW1haWwiOiJtLmxhbmNpQGdtYWlsLmNvbSIsImRvYiI6IjE5OTAtMjAtMDQiLCJhdmF0YXIiOiJodHRwczovL3MzLmFwLXNvdXRoZWFzdC0yLmFtYXpvbmF3cy5jb20vY2RuLmdyZWVraGVyYWxkLmNvbS5hdS93cC1jb250ZW50L3VwbG9hZHMvMjAyMC8wNy8wNTE5NDYxNy9kZWZhdWx0LWF2YXRhci5wbmciLCJsb2NhdGlvbiI6IjQxLjkwMjc4MzUsIDEyLjQ5NjM2NTUiLCJpZCI6IjY0ZjIxZWM4ZmQ1NDZlYTgwZWQ5ZjNlNyIsInRvZG9zIjpbXSwicHJvZmlsZUNvdmVyIjoiaHR0cHM6Ly9pbWFnZXMuc3F1YXJlc3BhY2UtY2RuLmNvbS9jb250ZW50L3YxLzU4NTg2ZmE1ZWJiZDFhNjBlN2Q3NmQzZS8xNDk0NDA5MTg3NTE0LU1TRFEyMjhSRkg2SU9WSzhOWk1LL2ltYWdlLWFzc2V0LmpwZWciLCJpYXQiOjE2OTM1ODkyNzksImV4cCI6MTY5MzY3NTY3OX0.8mWgiosA8AVGxIn58WA33SR_lCN4Q_YSjUGVvQ2Pexg
 
 ######! POST new author to DB
 POST http://localhost:5050/users/create HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstName": "Ciccio",
-    "lastName": "Pasticcio",
-    "email": "cpasticcio@gmail.com",
-    "password": "ciccio",
-    "dob": "1989-19-02"
+    "firstName": "Matteo",
+    "lastName": "Lanci",
+    "email": "mlanci@gmail.com",
+    "password": "matteo",
+    "dob": "1990-20-04"
 }
 
 ######! PATCH an existing user by its ID

@@ -64,9 +64,99 @@ moneybox.get("/users/:userId/moneybox", async (req, res) => {
 });
 
 //!POST new moneybox for specific user
+moneybox.post("/users/:userId/moneybox/create", async (req, res) => {
+  const { userId } = req.params;
+  const user = await UserModel.findById(userId);
+
+  const newMoneybox = new MoneyboxModel({
+    user: user._id,
+    totalAmount: req.body.totalAmount,
+  });
+
+  try {
+    const userMoneybox = await newMoneybox.save();
+
+    await UserModel.findByIdAndUpdate(userId, { moneybox: userMoneybox });
+
+    res.status(200).send({
+      statusCode: 200,
+      message: `New Moneybox saved successfully for user: ${user.firstName}`,
+      payload: userMoneybox,
+      new: true,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
 
 //!PATCH specific moneybox for specific user
+moneybox.patch("/users/:userId/moneybox/:moneyboxId/edit", async (req, res) => {
+  const { userId, moneyboxId } = req.params;
+  const user = await UserModel.findById(userId);
+  const userMoneybox = await MoneyboxModel.findById(moneyboxId);
+
+  if (!userMoneybox) {
+    return res.status(404).send({
+      statusCode: 404,
+      message: `No moneybox found for user: ${user.firstName} in DB`,
+    });
+  }
+
+  try {
+    const dataToUpdate = req.body;
+    const options = { new: true };
+    const result = await MoneyboxModel.findByIdAndUpdate(moneyboxId, dataToUpdate, options);
+
+    console.log(req.body);
+    res.status(200).send({
+      statusCode: 200,
+      message: `${user.firstName}'s moneybox successfully edited`,
+      result,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
 
 //!DELETE moneybox for specific user
+//todo GOES TO internal server error but actually remove moneybox from DB - check it
+moneybox.delete("/users/:userId/moneybox/:moneyboxId/delete", async (req, res) => {
+  const { userId, moneyboxId } = req.params;
+  const user = await UserModel.findById(userId);
+  const userMoneybox = await MoneyboxModel.findById(moneyboxId);
+
+  if (!userMoneybox) {
+    return res.status(404).send({
+      statusCode: 404,
+      message: `No moneybox found for user: ${user.firstName} in DB`,
+    });
+  }
+
+  try {
+    const moneyboxToDelete = await MoneyboxModel.findByIdAndDelete(moneyboxId);
+    user.moneybox.pull(moneyboxId);
+    await user.save();
+
+    res.status(200).send({
+      statusCode: 200,
+      message: `${user.firstName}'s moneybox successfully removed from DB`,
+      moneyboxToDelete,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Internal Server Error",
+      error,
+    });
+  }
+});
 
 module.exports = moneybox;

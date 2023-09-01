@@ -12,14 +12,20 @@ const MoneyboxModelSchema = new mongoose.Schema(
     },
     totalAmount: {
       type: Number,
-      required: true,
-      default: 0,
+      required: false,
     },
     latestTransactions: [
       {
-        type: String,
-        required: false,
-        default: [],
+        value: {
+          type: Number,
+          required: false,
+          default: 0,
+        },
+        description: {
+          type: String,
+          required: false,
+          default: "",
+        },
       },
     ],
   },
