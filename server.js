@@ -15,11 +15,11 @@ const WishlistRoute = require("./routes/wishlist");
 const MoneyboxRoute = require("./routes/moneybox");
 
 const app = express();
+app.use(express.json());
 
 //! middlewares
 app.use(cors());
 
-app.use(express.json());
 app.use("/", UsersRoute);
 app.use("/", LoginRoute);
 app.use("/", TodosRoute);

@@ -2,4 +2,23 @@
 GET http://localhost:5050/moneyboxes
 
 ######!GET specific moneybox for a specific user from its ID
-GET http://localhost:5050/users/64dd1d5a7d3d23cce7aecc6a/moneybox
+GET http://localhost:5050/users/64f22005eccc85c888d43882/moneybox
+
+######!POST new moneybox for specific user
+POST http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "totalAmount": 50000
+}
+
+######!PATCH specific moneybox for specific user
+PATCH http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/64f22027eccc85c888d43886/edit HTTP/1.1
+Content-Type: application/json
+
+{
+  "totalAmount": 32000
+}
+
+######!DELETE moneybox for specific user
+DELETE http://localhost:5050/users/64f21acececebf38c107b985/moneybox/64f21af4cecebf38c107b990/delete
