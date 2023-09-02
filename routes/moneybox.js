@@ -127,7 +127,6 @@ moneybox.patch("/users/:userId/moneybox/:moneyboxId/edit", async (req, res) => {
 });
 
 //!DELETE moneybox for specific user
-//todo GOES TO internal server error but actually remove moneybox from DB - check it
 moneybox.delete("/users/:userId/moneybox/:moneyboxId/delete", async (req, res) => {
   const { userId, moneyboxId } = req.params;
   const user = await UserModel.findById(userId);
@@ -136,18 +135,18 @@ moneybox.delete("/users/:userId/moneybox/:moneyboxId/delete", async (req, res) =
   if (!userMoneybox) {
     return res.status(404).send({
       statusCode: 404,
-      message: `No moneybox found for user: ${user.firstName} in DB`,
+      message: `No moneybox found for user with id: ${userId} in DB`,
     });
   }
 
   try {
     const moneyboxToDelete = await MoneyboxModel.findByIdAndDelete(moneyboxId);
-    user.moneybox.pull(moneyboxId);
+    await UserModel.updateOne({ _id: userId }, { $unset: { moneybox: 1 } });
     await user.save();
 
     res.status(200).send({
       statusCode: 200,
-      message: `${user.firstName}'s moneybox successfully removed from DB`,
+      message: `${userId}'s moneybox successfully removed from DB`,
       moneyboxToDelete,
     });
   } catch (error) {
