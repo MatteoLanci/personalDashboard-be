@@ -1,22 +1,22 @@
 const mongoose = require("mongoose");
 
-const MoneyboxModelSchema = new mongoose.Schema(
+const TransactionsModelSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    wishlist: {
+    moneybox: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Wishlist",
+      ref: "Moneybox",
     },
-    totalAmount: {
+    value: {
       type: Number,
       required: false,
     },
-    latestTransactions: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Transactions",
+    description: {
+      type: String,
+      required: false,
     },
   },
   {
@@ -25,4 +25,4 @@ const MoneyboxModelSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Moneybox", MoneyboxModelSchema, "moneybox");
+module.exports = mongoose.model("Transactions", TransactionsModelSchema, "transactions");

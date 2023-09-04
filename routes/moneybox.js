@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const UserModel = require("../models/userModel");
 const WishlistModel = require("../models/wishlistModel");
 const MoneyboxModel = require("../models/moneyboxModel");
+const TransactionsModel = require("../models/transactionsModel");
 
 const moneybox = express.Router();
 
