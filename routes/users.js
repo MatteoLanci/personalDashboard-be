@@ -158,6 +158,7 @@ user.delete("/users/:userId/delete", async (req, res) => {
     res.status(200).send({
       statusCode: 200,
       message: `user with id: ${userId} successfully deleted from DB`,
+      userToDelete,
     });
   } catch (error) {
     res.status(500).send({

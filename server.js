@@ -13,6 +13,7 @@ const LoginRoute = require("./routes/login");
 const TodosRoute = require("./routes/todos");
 const WishlistRoute = require("./routes/wishlist");
 const MoneyboxRoute = require("./routes/moneybox");
+const TransactionsRoute = require("./routes/transactions");
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use("/", LoginRoute);
 app.use("/", TodosRoute);
 app.use("/", WishlistRoute);
 app.use("/", MoneyboxRoute);
+app.use("/", TransactionsRoute);
 
 mongoose.connect(process.env.MONGO_DB_URL);
 const db = mongoose.connection;
