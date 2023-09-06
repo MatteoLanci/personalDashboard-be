@@ -9,18 +9,15 @@ POST http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/create HTTP/1
 Content-Type: application/json
 
 {
-    "totalAmount": 50000
+    "totalAmount": 500
 }
 
 ######!PATCH specific moneybox for specific user
-PATCH http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/64f2f368e42706f219fe4f3b/edit HTTP/1.1
+PATCH http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/64f632791ae757a5faca6f71/edit HTTP/1.1
 Content-Type: application/json
 
 {
-  "latestTransactions":{
-    "value": 300,
-    "description": " new income"
-  }
+  "totalAmount": 20000
 }
 
 ######!DELETE moneybox for specific user

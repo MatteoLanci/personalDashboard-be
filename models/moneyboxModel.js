@@ -10,13 +10,13 @@ const MoneyboxModelSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Wishlist",
     },
+    latestTransactions: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Transactions" }],
+      default: [],
+    },
     totalAmount: {
       type: Number,
       required: false,
-    },
-    latestTransactions: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Transactions",
     },
   },
   {

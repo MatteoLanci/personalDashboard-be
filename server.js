@@ -25,8 +25,8 @@ app.use("/", UsersRoute);
 app.use("/", LoginRoute);
 app.use("/", TodosRoute);
 app.use("/", WishlistRoute);
-app.use("/", MoneyboxRoute);
 app.use("/", TransactionsRoute);
+app.use("/", MoneyboxRoute);
 
 mongoose.connect(process.env.MONGO_DB_URL);
 const db = mongoose.connection;
