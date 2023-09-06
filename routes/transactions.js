@@ -49,6 +49,9 @@ transactions.post("/users/:userId/moneybox/:moneyboxId/transactions/create", asy
   try {
     const userTransaction = await newTransaction.save();
 
+    userMoneybox.totalAmount += parseFloat(req.body.value);
+    await userMoneybox.save();
+
     userMoneybox.latestTransactions.push(userTransaction);
     await userMoneybox.save();
 
