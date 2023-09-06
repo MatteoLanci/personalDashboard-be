@@ -6,7 +6,7 @@ POST http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/64f85811ac0e3
 Content-Type: application/json
 
 {
-    "value": 200,
+    "value": 1,
     "description": "new personal income"
 }
 
@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ######! DELETE specific transaction in specific user's moneybox
-DELETE http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/64f85811ac0e3aabea68909a/transactions/64f86463445f960911d75569/delete
+DELETE http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/64f85811ac0e3aabea68909a/transactions/64f8c2a18a0de97b9bf36dc6/delete
 
 ######! DELETE all transactions from specific user's moneybox
 DELETE http://localhost:5050/users/64f22005eccc85c888d43882/moneybox/64f85811ac0e3aabea68909a/transactions/clear
