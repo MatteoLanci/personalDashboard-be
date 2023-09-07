@@ -73,6 +73,8 @@ wishlist.post("/users/:userId/wishlist/create", async (req, res) => {
     user: user._id,
     content: req.body.content,
     price: req.body.price,
+    description: req.body.description,
+    url: req.body.url,
   });
 
   try {
