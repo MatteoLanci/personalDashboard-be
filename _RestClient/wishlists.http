@@ -5,25 +5,24 @@ GET http://localhost:5050/wishlists
 GET http://localhost:5050/users/64dd1d5a7d3d23cce7aecc6a/wishlist
 
 ######! POST new element in user's wishlist
-POST http://localhost:5050/users/64dd1d5a7d3d23cce7aecc6a/wishlist/create HTTP/1.1
+POST http://localhost:5050/users/64f6336f1ae757a5faca6f99/wishlist/create HTTP/1.1
 Content-Type: application/json
 
 {
-    "content": "thinkpad",
-    "price": 2700.90
+    "content": "Creative Desk",
+    "price": 890.50
 }
 
 ######! PATCH specific element in user's wishlist
-PATCH http://localhost:5050/users/64dd1d5a7d3d23cce7aecc6a/wishlist/64f0ec903ae3640fe19d3701/edit HTTP/1.1
+PATCH http://localhost:5050/users/64f22005eccc85c888d43882/wishlist/64f9899015d11a51ea1ed043/edit HTTP/1.1
 Content-Type: application/json
 
 {
-    "content": "Viaggio a Tokyo (edited)",
-    "price": 3999.00
+    "description" : "GET THIS KEYBOARD"
 }
 
 ######! DELETE specific element in user's wishlist
-DELETE http://localhost:5050/users/64dd1d5a7d3d23cce7aecc6a/wishlist/64f0f615b1934643cc328930/delete
+DELETE http://localhost:5050/users/64f22005eccc85c888d43882/wishlist/64f9aba415d11a51ea1ed332/delete
 
 ######! DELETE all elements from user's wishlist
 DELETE http://localhost:5050/users/64dd1d5a7d3d23cce7aecc6a/wishlist/clear
