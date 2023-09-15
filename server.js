@@ -14,6 +14,8 @@ const TodosRoute = require("./routes/todos");
 const WishlistRoute = require("./routes/wishlist");
 const MoneyboxRoute = require("./routes/moneybox");
 const TransactionsRoute = require("./routes/transactions");
+const PurchaseRoute = require("./routes/wishPurchase");
+const GSearchRoute = require("./routes/googleSearchImgRoute");
 
 const app = express();
 app.use(express.json());
@@ -27,6 +29,8 @@ app.use("/", TodosRoute);
 app.use("/", WishlistRoute);
 app.use("/", TransactionsRoute);
 app.use("/", MoneyboxRoute);
+app.use("/", PurchaseRoute);
+app.use("/", GSearchRoute);
 
 mongoose.connect(process.env.MONGO_DB_URL);
 const db = mongoose.connection;
