@@ -17,6 +17,7 @@ const MoneyboxModelSchema = new mongoose.Schema(
     totalAmount: {
       type: Number,
       required: false,
+      default: 0,
     },
   },
   {
