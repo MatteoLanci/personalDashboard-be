@@ -5,6 +5,9 @@ const bcrypt = require("bcrypt");
 
 const UserModel = require("../models/userModel");
 const TodosModel = require("../models/todosModel");
+const MoneyboxModel = require("../models/moneyboxModel");
+const TransactionModel = require("../models/transactionsModel");
+const WishlistModel = require("../models/wishlistModel");
 
 const user = express.Router();
 
@@ -144,20 +147,35 @@ user.patch("/users/:userId", async (req, res) => {
 user.delete("/users/:userId/delete", async (req, res) => {
   const { userId } = req.params;
 
-  const userExists = await UserModel.findByIdAndDelete(userId);
-  if (!userExists) {
-    return res.status(404).send({
-      statusCode: 404,
-      message: `user with id '${userId}' not found in DB`,
-    });
-  }
-
   try {
+    // Trova e elimina l'utente
     const userToDelete = await UserModel.findByIdAndDelete(userId);
+
+    if (!userToDelete) {
+      return res.status(404).send({
+        statusCode: 404,
+        message: `User with id '${userId}' not found in DB`,
+      });
+    }
+
+    // Elimina il Moneybox dell'utente
+    await MoneyboxModel.findOneAndDelete({ user: userId });
+
+    // Trova e elimina i Todos dell'utente
+    await TodosModel.deleteMany({ user: userId });
+
+    // Trova il Moneybox dell'utente e poi elimina le Transazioni collegate ad esso
+    const moneybox = await MoneyboxModel.findOne({ user: userId });
+    if (moneybox) {
+      await TransactionsModel.deleteMany({ moneybox: moneybox._id });
+    }
+
+    // Elimina la Wishlist dell'utente
+    await WishlistModel.deleteMany({ user: userId });
 
     res.status(200).send({
       statusCode: 200,
-      message: `user with id: ${userId} successfully deleted from DB`,
+      message: `User with id: ${userId} and associated data successfully deleted from DB`,
       userToDelete,
     });
   } catch (error) {

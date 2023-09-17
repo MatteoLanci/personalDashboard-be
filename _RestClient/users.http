@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ######! DELETE a specific user from DB by its Id
-DELETE http://localhost:5050/users/64ceb20cd96c0fd0c575efa0/delete
+DELETE http://localhost:5050/users/65074baa89c73c11bc358f84/delete
 
 ######? -------------------------> TODOS ROUTES RELATIVE TO SPECIFIC USER
 ######! GET all todos relative to a single user
