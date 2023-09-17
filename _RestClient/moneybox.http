@@ -5,11 +5,11 @@ GET http://localhost:5050/moneyboxes
 GET http://localhost:5050/users/64f22005eccc85c888d43882/moneybox
 
 ######!POST new moneybox for specific user
-POST http://localhost:5050/users/64f6336f1ae757a5faca6f99/moneybox/create HTTP/1.1
+POST http://localhost:5050/users/65056515a1bcd013d3d6e8ba/moneybox/create HTTP/1.1
 Content-Type: application/json
 
 {
-    "totalAmount": 500
+    "totalAmount": 0
 }
 
 ######!PATCH specific moneybox for specific user
