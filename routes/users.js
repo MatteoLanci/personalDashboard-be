@@ -1,7 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
 
 const bcrypt = require("bcrypt");
+
+const RegisterEmailTemplate = require("../emails/registerEmailTemp");
 
 const UserModel = require("../models/userModel");
 const TodosModel = require("../models/todosModel");
@@ -14,6 +17,8 @@ const user = express.Router();
 //? middlewares IMPORT
 const verifyToken = require("../middlewares/verifyToken");
 const cloudinaryUpload = require("../middlewares/cloudUpload");
+const registerEmailTemplate = require("../emails/registerEmailTemp");
+const goodbyeEmailTemplate = require("../emails/goodbyeEmailTemp");
 
 //! POST propic/img in Cloudinary
 user.post("/users/cloudinaryUpload", cloudinaryUpload.single("avatar"), async (req, res) => {
@@ -97,6 +102,28 @@ user.post("/users/create", async (req, res) => {
   try {
     const user = await newUser.save();
 
+    const transporter = nodemailer.createTransport({
+      service: "hotmail",
+      auth: {
+        user: process.env.EMAIL_ID,
+        pass: process.env.EMAIL_SECRET,
+      },
+    });
+    const mailOptions = {
+      from: process.env.EMAIL_ID,
+      to: user.email,
+      subject: "Welcome in DataDash!",
+      html: registerEmailTemplate(user),
+      replyTo: "noreply@data-dash.dev",
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error sending email during new registration: ", error);
+      } else {
+        console.log("Email sent on new registration: ", info.response);
+      }
+    });
+
     res.status(200).send({
       statusCode: 200,
       message: "New user has been created and added to DB",
@@ -148,7 +175,6 @@ user.delete("/users/:userId/delete", async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Trova e elimina l'utente
     const userToDelete = await UserModel.findByIdAndDelete(userId);
 
     if (!userToDelete) {
@@ -158,20 +184,38 @@ user.delete("/users/:userId/delete", async (req, res) => {
       });
     }
 
-    // Elimina il Moneybox dell'utente
     await MoneyboxModel.findOneAndDelete({ user: userId });
 
-    // Trova e elimina i Todos dell'utente
     await TodosModel.deleteMany({ user: userId });
 
-    // Trova il Moneybox dell'utente e poi elimina le Transazioni collegate ad esso
     const moneybox = await MoneyboxModel.findOne({ user: userId });
     if (moneybox) {
       await TransactionsModel.deleteMany({ moneybox: moneybox._id });
     }
 
-    // Elimina la Wishlist dell'utente
     await WishlistModel.deleteMany({ user: userId });
+
+    const transporter = nodemailer.createTransport({
+      service: "hotmail",
+      auth: {
+        user: process.env.EMAIL_ID,
+        pass: process.env.EMAIL_SECRET,
+      },
+    });
+    const mailOptions = {
+      from: process.env.EMAIL_ID,
+      to: userToDelete.email,
+      subject: "Farewell from DataDash: Your Presence Will Be Missed",
+      html: goodbyeEmailTemplate(userToDelete),
+      replyTo: "noreply@data-dash.dev",
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error sending email on user account deletion: ", error);
+      } else {
+        console.log("Email sent successfully during user account deletion: ", info.response);
+      }
+    });
 
     res.status(200).send({
       statusCode: 200,
