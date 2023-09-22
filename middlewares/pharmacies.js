@@ -1,11 +1,14 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
+const pluginStealth = require("puppeteer-extra-plugin-stealth");
+const { executablePath } = require("puppeteer");
+
+puppeteer.use(pluginStealth());
 
 const pharmacies = async (locationName) => {
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: "new", executablePath: executablePath() });
   const page = await browser.newPage();
 
   const url = `https://www.paginegialle.it/farmacie-turno/${locationName}`;
-
   await page.goto(url);
 
   const data = await page.evaluate(() => {
