@@ -4,8 +4,14 @@ const { executablePath } = require("puppeteer");
 
 puppeteer.use(pluginStealth());
 
+const proxyAddress = "2.229.249.153";
+
 const pharmacies = async (locationName) => {
-  const browser = await puppeteer.launch({ headless: "new", executablePath: executablePath() });
+  const browser = await puppeteer.launch({
+    headless: "new",
+    executablePath: executablePath(),
+    args: [`--proxy-server${proxyAddress}`],
+  });
   const page = await browser.newPage();
 
   const url = `https://www.paginegialle.it/farmacie-turno/${locationName}`;
