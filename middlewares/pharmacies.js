@@ -5,7 +5,7 @@ const { executablePath } = require("puppeteer");
 puppeteer.use(pluginStealth());
 
 const pharmacies = async (locationName) => {
-  const browser = await puppeteer.launch({ headless: false, executablePath: executablePath() });
+  const browser = await puppeteer.launch({ headless: "new", executablePath: executablePath() });
   const page = await browser.newPage();
 
   const url = `https://www.paginegialle.it/farmacie-turno/${locationName}`;
