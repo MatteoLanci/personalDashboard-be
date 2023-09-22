@@ -4,7 +4,7 @@ const { executablePath } = require("puppeteer");
 
 puppeteer.use(pluginStealth());
 
-const proxyAddress = "2.229.249.153";
+const proxyAddress = "2.229.249.153:4145";
 
 const pharmacies = async (locationName) => {
   const browser = await puppeteer.launch({
