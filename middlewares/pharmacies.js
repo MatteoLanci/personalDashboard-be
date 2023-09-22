@@ -1,13 +1,11 @@
 const puppeteer = require("puppeteer");
-var useragent = require("user-agents");
+const proxy = "";
 
 const pharmacies = async (locationName) => {
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: "new", args: [`--proxy-server=${proxy}`] });
   const page = await browser.newPage();
 
   const url = `https://www.paginegialle.it/farmacie-turno/${locationName}`;
-
-  await page.setUserAgent(useragent.toString());
 
   await page.goto(url);
 
