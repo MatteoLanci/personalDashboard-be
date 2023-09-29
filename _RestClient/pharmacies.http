@@ -1,1 +1,1 @@
-GET http://localhost:5050/scrape?locationName=Anzio
+GET http://localhost:5050/scrape?locationName=41.8152448,12.4321792?f=apertura
