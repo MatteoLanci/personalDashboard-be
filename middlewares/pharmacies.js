@@ -20,11 +20,9 @@ const pharmacies = async (locationName) => {
     const pharmaWrapper = document.querySelectorAll(".search-itm");
 
     pharmaWrapper.forEach((item) => {
-      const pharmaName = item.querySelector(".search-itm__rag").innerText;
-      const pharmaAddress = item.querySelector(".search-itm__adr").innerText;
-      const pharmaDescription = item.querySelector(".search-itm__dsc").innerText;
-
-      const pharmaInfo = item.querySelector(".search-itm__note span span").innerText;
+      const pharmaName = item.querySelector(".search-itm__rag")?.innerText;
+      const pharmaAddress = item.querySelector(".search-itm__adr")?.innerText;
+      const pharmaInfo = item.querySelector(".search-itm__note span span")?.innerText;
 
       const pharmaPhoneElement = item.querySelector(
         ".search-itm__footer .search-itm__shownum .hidden .search-itm__ballonIcons li:nth-child(1)"
@@ -34,7 +32,6 @@ const pharmacies = async (locationName) => {
       result.push({
         name: pharmaName,
         address: pharmaAddress,
-        desc: pharmaDescription,
         phone: pharmaPhone,
         info: pharmaInfo,
       });
